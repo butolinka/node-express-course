@@ -1,1 +1,1 @@
-console.log('why hello')
+console.log('why hello');
