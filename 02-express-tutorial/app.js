@@ -1,50 +1,36 @@
-const { products } = require("./data");
 const express = require('express');
 const app = express();
+const peopleRouter = require('./routes/people');
+const productsRouter= require('./routes/products');
 
-app.listen(3000, () => {
-    console.log('server is on');
-});
-app.use(express.static("./public"));
+
+
+// const logger = (req, res, next)=>{
+//     const method= req.method;
+//     const url = req.url;
+//     const hour = new Date().getHours();
+//     const minute = new Date().getMinutes();
+//     const second = new Date().getSeconds();
+//     const time = `${hour}:${minute}:${second}`;
+//     console.log(method, url, time);
+//     next();
+// };
+
+app.use(express.static('./methods-public'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use('/api/v1/people', peopleRouter);
+app.use('/api/v1/products', productsRouter);
+
 app.get('/api/v1/test', (req, res)=>{
     res.json({ message: "It worked!" });
-});
-app.get('/api/v1/products', (req, res)=>{
-    res.json({products });
-});
-app.get('/api/v1/products/:productID', (req, res)=>{
-    const {productID} = req.params;
-    const theProduct = products.find((product) => product.id === Number(productID));
-    if(!theProduct){
-        return res.status(404).send('<h1>the product was not found</h1>');
-    }
-    return res.json(theProduct);
-});
-
-app.get('/api/v1/query',(req,res)=>{
-    const {search, limit, price} = req.query;
-    let sortedProducts = [...products];
-
-    if(search){
-        sortedProducts = sortedProducts.filter((product)=>{
-            return product.name.startsWith(search);
-        });
-    }
-    if (limit){
-        sortedProducts =  sortedProducts.slice(0, Number(limit));
-    }
-    if (price){
-        sortedProducts = sortedProducts.filter((product)=>{
-            return product.price <= Number(price);
-        });
-    }
-    if (sortedProducts.length<1){
-        res.status(200).json('the product you tried to find does not exist');
-    }
-    res.status(200).json(sortedProducts);
 });
 
 
 app.all('*',(req,res)=>{
     res.status(404).send('<h1>resourse not found</h1>');
+});
+
+app.listen(3000, () => {
+    console.log('server is on');
 });
