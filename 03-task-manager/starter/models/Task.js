@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const TaskSchema = new mongoose.Schema({
@@ -14,4 +13,3 @@ completed: {type:Boolean,
 });
 
 module.exports = mongoose.model("Task", TaskSchema);
-
