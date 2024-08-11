@@ -1,5 +1,13 @@
+<<<<<<< Updated upstream
 
 !answers/temporary/.keep
 /node_modules
 /content/big.txt
 answers/temporary/*
+=======
+/content/big.txt
+answers/temporary/*
+!answers/temporary/.keep
+/content/temp.txt
+/node_modules
+>>>>>>> Stashed changes
