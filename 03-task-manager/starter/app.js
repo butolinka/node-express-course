@@ -10,6 +10,7 @@ const notFound = require('./middleware/not-found');
 const errorHandler = require('./middleware/errorHandler');
 app.use(express.static('./public'));
 
+
 const start = async()=>{
     try{
     await connectDB(process.env.MONGO_URI);
@@ -19,8 +20,10 @@ const start = async()=>{
     }
 };
 
+
 app.use(express.json());
 app.use('/api/v1/tasks', tasks);
 app.use(notFound);
 app.use(errorHandler);
 start();
+
